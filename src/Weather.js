@@ -29,16 +29,7 @@ class WeatherComponent extends React.Component {
       return (
         <div>
           <h1>{this.weatherData.name}</h1>
-          <Table>
-            <thead>
-              <tr>
-                <th>Temperature</th>
-                <th>Pressure</th>
-                <th>Humidity</th>
-              </tr>
-            </thead>
-            <WeatherTBody weatherData={this.weatherData} />
-          </Table>
+          <WeatherTable weatherData={this.weatherData} />
         </div>
       );
     } else {
@@ -82,6 +73,27 @@ class Convert extends Component {
       <div>
         {temp}
       </div>
+    )
+  }
+}
+
+class WeatherTable extends Component {
+  constructor(){
+    super()
+  }
+
+  render(){
+    return(
+      <Table>
+      <thead>
+        <tr>
+          <th>Temperature</th>
+          <th>Pressure</th>
+          <th>Humidity</th>
+        </tr>
+      </thead>
+      <WeatherTBody weatherData={this.props.weatherData} />
+    </Table>
     )
   }
 }
