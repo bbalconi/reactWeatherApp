@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-var FontAwesome = require('react-fontawesome');
+// import React, { Component } from 'react';
+// var FontAwesome = require('react-fontawesome');
 
 // This exercise is getting building a component different from the weather table
 // that will utilize the api data. Based on weather description found in the 
@@ -36,22 +36,22 @@ var FontAwesome = require('react-fontawesome');
 // So now get it working to render the proper font-awesome icon! There's many
 // ways to do this. 
 // Here's a screenshot of what mine looks like. (It's stand alone, no table in it yet)
-class IconWidget extends Component {
-  render() {
-    return (
-      <Card>
-      <CardBody>
-        <CardTitle>Bozeman</CardTitle>
-        <CardSubtitle>Clear sky</CardSubtitle>
-         <FontAwesome
-          className ="fa fa-sun-o"
-          name="umbrella"
-          size="2x"
-      />
-      </CardBody>
-    </Card>   
+// class IconWidget extends Component {
+//   render() {
+//     return (
+//       <Card>
+//       <CardBody>
+//         <CardTitle>Bozeman</CardTitle>
+//         <CardSubtitle>Clear sky</CardSubtitle>
+//          <FontAwesome
+//           className ="fa fa-sun-o"
+//           name="umbrella"
+//           size="2x"
+//       />
+//       </CardBody>
+//     </Card>   
 
-    );
-  }
-}
-export default IconWidget;
+//     );
+//   }
+// }
+// export default IconWidget;

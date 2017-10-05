@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink ,Table} from 'reactstrap';
+const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
 
 //  api key 4 l8tr = 3d6b633422451393e953dab4052ea0e4
 //  url 4 l8tr  - http://api.openweathermap.org/data/2.5/weather?q=Bozeman&appid= 
@@ -16,7 +17,6 @@ class WeatherComponent extends React.Component {
     fetch(url).then(function (response) {
       return response.json();
     }).then((weatherObj) => {
-      console.log(weatherObj)
       this.weatherData = weatherObj;
       this.setState({
         initialized: true
@@ -58,7 +58,7 @@ class WeatherTBody extends Component {
       <tbody>
         <tr>
           <td>
-            {this.props.weatherData.main.temp}
+            <Convert blark={this.props.weatherData} />
           </td>
           <td>
             {this.props.weatherData.main.pressure}
@@ -71,6 +71,21 @@ class WeatherTBody extends Component {
     );
   }
 }
+
+class Convert extends Component {
+  constructor(){
+    super()
+  }
+  render(){
+    var temp = kelvinToFahrenheit(this.props.blark.main.temp);
+    return(
+      <div>
+        {temp}
+      </div>
+    )
+  }
+}
+
 
 // Exercise 1:
 //  In the table, we display the temperature in kelvin. Since we aren't
