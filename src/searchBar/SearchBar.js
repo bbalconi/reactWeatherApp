@@ -41,7 +41,7 @@ export default class SearchBar extends Component{
   handleInput(e){
     this.setState({
       urlTarget: e.target.value
-    })
+    });
   }
   clicked(a){
     console.log(a.target.value);

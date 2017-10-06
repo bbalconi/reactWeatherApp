@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink ,Table} from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Table } from 'reactstrap';
 import IconWidget from "./IconWidget.js";
 import SearchBar from "./searchBar/SearchBar.js";
 const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
@@ -8,62 +8,77 @@ const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
 //  api key 4 l8tr = 3d6b633422451393e953dab4052ea0e4
 //  url 4 l8tr  - http://api.openweathermap.org/data/2.5/weather?q=Bozeman&appid= 
 class WeatherComponent extends React.Component {
-  constructor () {
+  constructor() {
     super();
-    this.getWeatherData = this.getWeatherData.bind(this);    
+    this.getWeatherData = this.getWeatherData.bind(this);
     this.state = {
       initialized: false,
-      urlTarget: "Bozeman"
+      urlTarget: "Bozeman",
+      error:false
     };
   }
-  getWeatherData(city){
-    if  (this.state.initialized){
+  getWeatherData(city) {
+    if (this.state.initialized) {
       this.setState({
         initialized: false
-      })
+      });
     }
     console.log(city);
     var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=3d6b633422451393e953dab4052ea0e4';
-    console.log(url); 
+    console.log(url);
     fetch(url).then(function (response) {
       return response.json();
     }).then((weatherObj) => {
-      console.log(weatherObj);
       this.weatherData = weatherObj;
-      this.setState({
-        initialized: true
-      });
-    });
-  }
-  componentDidMount () {
-    console.log(this.state.urlTarget);
+      if(this.weatherData.cod == 200){
+        console.log(this.weatherData.cod);
+        this.setState({
+          initialized: true,
+          error: false
+        });
+      } else {
+          this.setState({
+            initialized:true,
+            error:true
+          });
+        }
+  });
+}
+  componentDidMount() {
     this.getWeatherData("Bozeman");
   }
 
-  render () {
-    if (this.state.initialized) {
+  render() {
+    if (this.state.initialized && !this.state.error) {
       return (
         <div>
           <h1>{this.weatherData.name}</h1>
           <WeatherTable weatherData={this.weatherData} />
-          <IconWidget weatherData={this.weatherData}/>
-          <SearchBar getWeatherData={this.getWeatherData}/>
+          <IconWidget weatherData={this.weatherData} />
+          <SearchBar getWeatherData={this.getWeatherData} />
         </div>
       );
+    } else if (this.state.initialized && this.state.error) { 
+      return(
+        <div>
+            <h2>You input a wrong city</h2>
+            <SearchBar getWeatherData={this.getWeatherData} />
+            </div>
+      )
     } else {
       return (
         <h2>
           Loading...
         </h2>
-      );
+        );
     }
   }
 }
 
 class WeatherTBody extends Component {
-  render () {
+  render() {
     return (
-      
+
       <tbody>
         <tr>
           <td>
@@ -82,12 +97,12 @@ class WeatherTBody extends Component {
 }
 
 class Convert extends Component {
-  constructor(){
+  constructor() {
     super()
   }
-  render(){
+  render() {
     var temp = kelvinToFahrenheit(this.props.blark.main.temp);
-    return(
+    return (
       <div>
         {temp}
       </div>
@@ -96,22 +111,22 @@ class Convert extends Component {
 }
 
 class WeatherTable extends Component {
-  constructor(){
+  constructor() {
     super()
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <Table>
-      <thead>
-        <tr>
-          <th>Temperature</th>
-          <th>Pressure</th>
-          <th>Humidity</th>
-        </tr>
-      </thead>
-      <WeatherTBody weatherData={this.props.weatherData} />
-    </Table>
+        <thead>
+          <tr>
+            <th>Temperature</th>
+            <th>Pressure</th>
+            <th>Humidity</th>
+          </tr>
+        </thead>
+        <WeatherTBody weatherData={this.props.weatherData} />
+      </Table>
     )
   }
 }
