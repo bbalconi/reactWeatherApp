@@ -41,40 +41,15 @@ var FontAwesome = require('react-fontawesome');
 // ways to do this. 
 // Here's a screenshot of what mine looks like. (It's stand alone, no table in it yet)
 class IconWidget extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      icon: ""
-    };
-    
-  }
-  
-  componentDidMount () {
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=Bozeman&appid=3d6b633422451393e953dab4052ea0e4';
-    fetch(url).then(function (response) {
-      return response.json();
-    }).then((weatherObj) => {
-      this.data = weatherObj;
-      this.setState({
-        icon: this.data.weather[0].icon
-      });
-    });
-  }
-  
   render () {
-    var flark = this;
-    console.log(this.data);
-    // let iconURL = "http://openweathermap.org/img/w/" +  this.data.weather.icon + ".png";
+    var flark = this.props.weatherData;
+    let iconURL = "http://openweathermap.org/img/w/" +  flark.weather[0].icon + ".png";
     return (
       <Card>
-        <CardImg top width='100%' src={this.data} alt="Card image cap" />
         <CardBody>
-          <CardTitle>Bozeman</CardTitle>
-          <CardSubtitle>Clear sky</CardSubtitle>
-          <FontAwesome
-            className ="fa fa-sun-o"
-            name="umbrella"
-            size="2x" />
+          <CardTitle>{flark.name}</CardTitle>
+          <CardSubtitle>{flark.weather[0].description}</CardSubtitle>
+          <img src={iconURL}/>
         </CardBody>
       </Card>   
 

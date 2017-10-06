@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink ,Table} from 'reactstrap';
+import IconWidget from "./IconWidget.js";
+import SearchBar from "./searchBar/SearchBar.js";
 const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
 
 
@@ -8,21 +10,34 @@ const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
 class WeatherComponent extends React.Component {
   constructor () {
     super();
+    this.getWeatherData = this.getWeatherData.bind(this);    
     this.state = {
-      initialized: false
+      initialized: false,
+      urlTarget: "Bozeman"
     };
   }
-
-  componentDidMount () {
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=Bozeman&appid=3d6b633422451393e953dab4052ea0e4';
+  getWeatherData(city){
+    if  (this.state.initialized){
+      this.setState({
+        initialized: false
+      })
+    }
+    console.log(city);
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=3d6b633422451393e953dab4052ea0e4';
+    console.log(url); 
     fetch(url).then(function (response) {
       return response.json();
     }).then((weatherObj) => {
+      console.log(weatherObj);
       this.weatherData = weatherObj;
       this.setState({
         initialized: true
       });
     });
+  }
+  componentDidMount () {
+    console.log(this.state.urlTarget);
+    this.getWeatherData("Bozeman");
   }
 
   render () {
@@ -31,6 +46,8 @@ class WeatherComponent extends React.Component {
         <div>
           <h1>{this.weatherData.name}</h1>
           <WeatherTable weatherData={this.weatherData} />
+          <IconWidget weatherData={this.weatherData}/>
+          <SearchBar getWeatherData={this.getWeatherData}/>
         </div>
       );
     } else {

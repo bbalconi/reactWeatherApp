@@ -28,6 +28,32 @@ var FontAwesome = require('react-fontawesome');
 
 //You've pretty much built a react app!!!!
 
-class SearchBar extends Component{
+export default class SearchBar extends Component{
+  constructor(){
+    super();
+    this.clicked = this.clicked.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.state={
+      urlTarget: ""
+    }
+  }
 
+  handleInput(e){
+    this.setState({
+      urlTarget: e.target.value
+    })
+  }
+  clicked(a){
+    console.log(a.target.value);
+    this.props.getWeatherData(this.state.urlTarget);
+  }
+  render(){
+    console.log(this.props);
+    return (
+      <div>
+        <input id="stupid-users-input" type="text" name="urlTarget" value={this.state.urlTarget} onChange={this.handleInput}/>
+        <button onClick={this.clicked} />
+      </div>
+    );
+  }
 }
