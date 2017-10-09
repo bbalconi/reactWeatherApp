@@ -1,0 +1,13 @@
+Now lets apply some routing to the weather app. 
+Step 1: Build a nav bar for this app using react strap. Feel free to style it to look rad. 
+Step 2: Make routes abnd links for a home page, current weather, and sunrise report (we'll make it today)
+Step 3: Configure the app to render different components from each route. The 'current weather' will be the 
+        table, icon widget, and search bar. We'll have to build the 'home page' and 'sunrise report'. 
+Step 4: The home page will be a react-strap carousel that renders some weather images and info about the app. 
+          (this is all the info about this I'm giving you - it doesn't need to be anything fancy). This will be the "/" path
+          in our router.
+Step 5: Make a 'sunrise report' component that renders the time of todays sunrise in the format Sunrise: hh:mm in large text, centered
+        on the page. Using the giphy api and the weather description as keywords, grab a giphy image and set it to the
+        background image for the sunrise time. Have this rendered when the user goes to appropriate url using react-router. 
+Step 6: Put the icon widget in the right top corner of the nav bar. Challenge - only call the weather api once. You might have to 
+        lift state. 
